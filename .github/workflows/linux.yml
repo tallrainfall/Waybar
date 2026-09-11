@@ -37,6 +37,13 @@ jobs:
         run: ninja -C build
       - name: test
         run: make test
+      - uses: actions/upload-artifact@v7
+        with:
+          name: "waybar-build-${{ matrix.distro }}"
+          path: build/
+          if-no-files-found: error
+          overwrite: true
+          archive: true
 
   # Feature-complete build: force-enable *every* optional module so a broken
   # #include or regression in any module fails CI loudly, instead of being
@@ -100,3 +107,10 @@ jobs:
         run: ninja -C build
       - name: test
         run: make test
+      - uses: actions/upload-artifact@v7
+        with:
+          name: waybar-build-full
+          path: build/
+          if-no-files-found: error
+          overwrite: true
+          archive: true
