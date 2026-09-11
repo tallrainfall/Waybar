@@ -40,7 +40,15 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           name: "waybar-build-${{ matrix.distro }}"
-          path: build/
+          path: |
+            build/
+            !build/build.ninja
+            !build/compile_commands.json
+            !build/meson-*/
+            !build/protocol/
+            !build/subprojects/
+            !build/subprojects/
+            !build/waybar.p/
           if-no-files-found: error
           overwrite: true
           archive: true
