@@ -1,0 +1,24 @@
+name: pull upstream updates
+
+on:
+  push:
+    branches:
+      - master
+
+  schedule:
+    - cron: '0 0 * * *'
+      timezone: 'America/Los_Angeles'
+
+jobs:
+  update-fork:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: autoupdate fork
+        uses: Shurtu-gal/autoupdate-fork-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          base_branch: master
