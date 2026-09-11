@@ -22,5 +22,5 @@ jobs:
         uses: Shurtu-gal/autoupdate-fork-action@v1.0.1
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          base_branch: master
+          base_branches: master
           ignore_conflicts: false
