@@ -10,7 +10,7 @@ on:
       timezone: 'America/Los_Angeles'
 
 jobs:
-  update-fork:
+  update_fork:
     runs-on: ubuntu-latest
 
     permissions:
@@ -18,6 +18,18 @@ jobs:
       actions: write
 
     steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: master
+
+      - id: sync
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4.3
+        with:
+          target_sync_branch: master
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }}
+          upstream_sync_branch: master
+          upstream_sync_repo: Alexays/Waybar
+
       - name: autoupdate fork
         uses: Shurtu-gal/autoupdate-fork-action@v1.0.1
         with:
