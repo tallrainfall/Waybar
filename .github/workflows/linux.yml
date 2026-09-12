@@ -92,6 +92,8 @@ jobs:
         run: meson compile -C build
       - name: test
         run: make test
+      - name: install
+        run: meson install -C build --destdir ./install
       - uses: actions/upload-artifact@v7
         with:
           name: waybar-build-full
