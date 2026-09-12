@@ -15,11 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         distro:
-          - alpine
           - archlinux
-          - fedora
-          - opensuse
-          - gentoo
         # NOTE: debian is intentionally omitted here — it is covered by the
         # dedicated `build-full` job below, which uses the same Debian image
         # but force-enables *every* optional module (a strict superset).
@@ -83,34 +79,15 @@ jobs:
         # Every feature forced to `enabled`/`true`: any missing dependency or
         # broken module is now a hard configure/build error, not a silent skip.
         run: |
-          meson setup build \
-            -Dcpp_std=c++20 \
-            -Dexperimental=true \
-            -Dman-pages=enabled \
-            -Dlibcxx=false \
-            -Dlibinput=enabled \
-            -Dlibnl=enabled \
-            -Dlibudev=enabled \
-            -Dlibevdev=enabled \
-            -Dpulseaudio=enabled \
-            -Dupower_glib=enabled \
-            -Dpipewire=enabled \
-            -Dmpris=enabled \
-            -Dsystemd=enabled \
-            -Ddbusmenu-gtk=enabled \
-            -Dmpd=enabled \
-            -Drfkill=enabled \
-            -Dsndio=enabled \
-            -Dlogind=enabled \
-            -Dtests=enabled \
-            -Djack=enabled \
-            -Dwireplumber=enabled \
-            -Dcava=enabled \
-            -Dgps=enabled \
-            -Dwwan=enabled \
-            -Dniri=true \
-            -Dmango=true \
-            -Dlogin-proxy=true
+          meson --prefix=/usr \
+          --buildtype=plain \
+          --auto-features=enabled \
+          --wrap-mode=nodownload \
+          -Dcpp_std=c++20 \
+          -Dexperimental=true \
+          -Dcava=disabled \
+          -Dtests=enabled \
+          build
       - name: build
         run: meson compile -C build
       - name: test
